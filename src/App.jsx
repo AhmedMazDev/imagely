@@ -7,23 +7,27 @@ import { useCallback } from "react/cjs/react.production.min";
 
 function App() {
   const [photos, setPhotos] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [serachTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
 
-  const fetchData = useCallback((pageNumber) => {
+  const fetchData = () => {
+    console.log("inside fetchData");
     axios
-      .get(`https://api.unsplash.com/photos?page=${pageNumber}`, {
+      .get(`https://api.unsplash.com/photos?page=${page}`, {
         params: {
           client_id: "v4zjW08UgbcIQd9YvcQnDeZh2J7FQWmIid5ZajsWKOE",
         },
       })
       .then((response) => {
         setPhotos((prevData) => [...prevData, ...response.data]);
-        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
     setPage((prevPage) => prevPage + 1);
-  }, []);
+  };
 
   useEffect(() => {
     console.log("in useEffect");
@@ -32,7 +36,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header setSearchTerm={setSearchTerm} />
+      <Header serachTerm={serachTerm} setSearchTerm={setSearchTerm} />
       <Gallery
         photos={photos}
         setPhotos={setPhotos}

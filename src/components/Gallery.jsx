@@ -4,23 +4,10 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 const Gallery = ({ photos, setPhotos, page, setPage, fetchData }) => {
-  const fetchMoreData = () => {
-    axios
-      .get(`https://api.unsplash.com/photos?page=${page}`, {
-        params: {
-          client_id: "v4zjW08UgbcIQd9YvcQnDeZh2J7FQWmIid5ZajsWKOE",
-        },
-      })
-      .then((response) => {
-        setPhotos((prevData) => [...prevData, ...response.data]);
-        setPage((prevPage) => prevPage + 1);
-        console.log(page);
-      });
-  };
   return (
     <InfiniteScroll
       dataLength={photos.length}
-      next={fetchMoreData}
+      next={fetchData}
       hasMore={true}
       loader={<h4>Loading...</h4>}
       endMessage={

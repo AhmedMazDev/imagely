@@ -1,19 +1,22 @@
 import React from "react";
 import search from "../search.png";
 
-const SearchBar = ({ setSearchTerm }) => {
-  const handleSubmit = (event) => {
+const SearchBar = ({ setSearchTerm, serachTerm }) => {
+  const handleChange = (event) => {
     event.preventDefault();
-    setSearchTerm(event.target.search.value);
+    console.log(event.target.value);
+    setSearchTerm(event.target.value);
   };
 
   return (
-    <form className="search-bar" onSubmit={handleSubmit}>
+    <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
       <input
         type="search"
         name="searchBar"
         id=""
         placeholder="Search Here..."
+        value={serachTerm}
+        onChange={handleChange}
       />
       <button>
         <img src={search} alt="" />
